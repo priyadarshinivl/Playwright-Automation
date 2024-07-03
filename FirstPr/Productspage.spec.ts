@@ -19,13 +19,36 @@ test('Verify hamburger menu', async({page}) =>{
     await hamburger.click();
     const elements = page.$$('.menu-item');
          
-         //await expect(elements).toHaveCount(4);
+    //await expect(elements).toHaveCount(4);
 
          
 
     for (const menuitem of await elements) {
     console.log(await menuitem.innerText());
   }
+
+});
+
+
+
+test('To loop through slide bars', async({page}) =>{
+
+  
+  const hamburger = page.locator('.bm-burger-button');
+    await hamburger.click();
+    const elements = page.$$('.menu-item');
+
+    const expectedOptions = ['All Items', 'About', 'Logout', 'Reset App State'];
+
+  for(const menu of await elements){
+    //console.log(await menu.innerText()); //print options
+    expect(expectedOptions).toContain(await menu.innerText());
+  }
+
+  const cross = page.locator('//*[@id="react-burger-cross-btn"]');
+
+  await cross.click();
+  await expect(hamburger).toBeVisible();
 
 });
 
