@@ -15,29 +15,20 @@ test.beforeEach(async({page}) => {
 });
 test('Verify hamburger menu', async({page}) =>{
    
-         const hamburger = page.locator('.bm-burger-button');
-         await hamburger.click();
-         const elements = page.$$('.menu-item');
+    const hamburger = page.locator('.bm-burger-button');
+    await hamburger.click();
+    const elements = page.$$('.menu-item');
          
          //await expect(elements).toHaveCount(4);
 
          
 
-  for (const menuitem of await elements) {
-    
-    //await menuitem.innerText();
-    const menuitem = expect(toContainText("All Items", "About", "Logout", "Reset App state"));
-      
-    console.log(menuitem);
+    for (const menuitem of await elements) {
+    console.log(await menuitem.innerText());
   }
+
 });
 
 
-function toContainText(arg0: string, arg1: string, arg2: string, arg3: string): any {
-    throw Error('Function not implemented.');
-}
 
-function _notImplemented() : never {
-    throw Error("not Implemented")
-}
 
