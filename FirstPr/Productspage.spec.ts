@@ -217,5 +217,4 @@ test('Dropdown options', async({page}) =>{
  //await expect(page.locator('.inventory_item_name').nth(0)).toHaveText('Expected Text');
 
  await expect(page.locator('//*[@id="item_3_title_link"]/div')).toHaveText(/Test\.allTheThings\(\) T-Shirt \(Red\)/);
-
 });
