@@ -1,4 +1,5 @@
 import{test, expect} from '@playwright/test';
+import { TestContext } from 'node:test';
 
 test.beforeEach(async({page}) => {
 
@@ -135,5 +136,86 @@ test('checking shoppingcart in the slidebars', async({page}) =>{
 
   // Assert the visibility of the element
   await expect(page.locator("//div[@id='checkout_info_container']//form//h3")).toBeVisible();
+
+});
+
+test('Adding things to the cart', async({page}) =>{
+
+ const tocart = page.locator("//button[@id='add-to-cart-sauce-labs-backpack']");
+
+ await page.waitForSelector("//button[@id='add-to-cart-sauce-labs-backpack']", { state: 'visible' });
+ //await page.waitForSelector("//button[@id='add-to-cart-sauce-labs-backpack']", { state: 'enabled' });
+ await tocart.click();
+
+ const shoppingcart = page.locator('.shopping_cart_link');
+    await shoppingcart.click();
+
+    await expect(page.locator(".inventory_item_name")).toBeVisible();
+    const checkout = page.locator("//button[@id='checkout']");
+
+    await checkout.click();
+
+    const firstname = await page.locator("input[name='firstName']");
+    await firstname.fill('Priyadarshini');
+
+    const lastname = await page.locator('input[data-test=lastName]');
+    await lastname.fill('Lakshaman');
+
+    const postalcode = await page.waitForSelector("#postal-code");
+    
+    await postalcode.fill('600047');
+    
+
+
+    //await page.getByPlaceholder('First Name').fill('Priyadarshini');
+    //await page.getByPlaceholder('Last Name').fill('Lakshmanan');
+    //await page.getByPlaceholder('Zip/Postal Code').fill('600047');
+
+    const cbutton = page.locator("#continue");
+  await cbutton.click();
+  await page.locator('input[data-test=lastName]').isVisible();
+
+  await page.locator("//button[@id='finish']").click();
+
+
+
+
+});
+
+
+
+test('Dropdown options', async({page}) =>{
+
+  const productsort = page.locator(".product_sort_container");
+  await productsort.click();
+
+
+
+ /* <select productsort>
+
+  <option value='az'>Name(A to Z)</option>
+  <option value='za'>Name(Z to A)</option>
+  <option value='lohi'>PRICE(low to high)</option>
+  <option value='lohi'>PRICE(high to low)</option>
+
+  </select>
+
+  */
+
+  const dropdown = page.locator('.product_sort_container');
+
+  //await dropdown.selectOption('az'); // Select "Name(A to Z)"
+  
+  await dropdown.selectOption('za'); // Select "Name(Z to A)"
+  
+  //await dropdown.selectOption('lohi'); // Select "PRICE(low to high)"
+  
+  //await dropdown.selectOption('hilo');
+
+ // await page.waitForSelector(".inventory_item_name",{ state: 'visible' });
+
+ //await expect(page.locator('.inventory_item_name').nth(0)).toHaveText('Expected Text');
+
+ await expect(page.locator('//*[@id="item_3_title_link"]/div')).toHaveText(/Test\.allTheThings\(\) T-Shirt \(Red\)/);
 
 });
