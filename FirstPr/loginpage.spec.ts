@@ -22,6 +22,9 @@ test('login button',async({page}) => {
     //const locator = page.locator('h3.header');
     await expect(page.locator('div > h3')).toContainText(['Epic sadface: Username is required']);
 
+    
+
+
 });
 
 test('User name', async({page}) => {
@@ -54,6 +57,19 @@ test('New Test', async({page}) =>{
 
     await expect(page).toHaveURL("https://www.saucedemo.com/inventory.html");
 
+
+    //to take screnshot for full page.
+    //await page.screenshot({ path: 'fullpage.png', fullPage: true });
+
+
+    // Take a screenshot of the specific element
+    const element = page.locator('#item_4_img_link');
+    await element.waitFor({ timeout: 60000 });   
+   await element.screenshot({ path: 'element-screenshot.png' });
+
+
+   //How to generate a PDF in Playwright
+   await page.pdf({ path: 'page.pdf', format: 'A4' });
 
 });
 
